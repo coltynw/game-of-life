@@ -2,7 +2,7 @@ import React, { useState, useCallback, useRef } from 'react';
 import produce from 'immer';
 import './App.css';
 
-let numRows = 25;
+let numRows = 25; // setting initial values for these varibables we'll update later
 let numCols = 25;
 let numPix = 25;
 let cellColor = 'gray';
@@ -11,6 +11,7 @@ let borderColor = 'black';
 let cellW = 25;
 let cellH = 25;
 let count = 0;
+let time = 200;
 
 const operations = [
   [0, 1],
@@ -81,7 +82,7 @@ const runSimulation = useCallback (() => {
   })
 
   // then call ourselves again in 2nd parameter time
-  setTimeout(runSimulation, 200)
+  setTimeout(runSimulation, time)
   count++
 }, [])
 
@@ -141,6 +142,7 @@ const runSimulation = useCallback (() => {
       cellW = 25;
       cellH = 25;
       count = 0;
+      time = 200;
       setGrid(generateEmptyGrid());
     }}>
       RESET
@@ -205,9 +207,24 @@ const runSimulation = useCallback (() => {
     <button onClick={( ) => {
        numPix++;
       setGrid(generateEmptyGrid());
-    }}>
-      add width space?
-    </button>
+    }}> 
+          add width space?
+    </button>   
+    
+    <button onClick={( ) => {
+      time = 50;
+      setGrid(generateEmptyGrid());
+   }}>
+     fast speed
+   </button>
+
+   <button onClick={( ) => {
+      time = 500;
+      setGrid(generateEmptyGrid());
+   }}>
+     slow speed
+   </button>
+
 
     <button onClick={( ) => {
       if (bgColor === 'white')
