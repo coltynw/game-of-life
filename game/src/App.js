@@ -2,8 +2,14 @@ import React, { useState, useCallback, useRef } from 'react';
 import produce from 'immer';
 import './App.css';
 
-const numRows = 25;
-const numCols = 25;
+let numRows = 25;
+let numCols = 25;
+let numPix = 25;
+let cellColor = 'black';
+let bgColor = 'gray';
+let borderColor = 'white';
+let cellW = 25;
+let cellH = 25;
 
 const operations = [
   [0, 1],
@@ -93,22 +99,109 @@ const runSimulation = useCallback (() => {
     <button onClick={() => {
     const rows = [];
     for (let i = 0; i < numRows; i++) {
+      rows.push(Array.from(Array(numCols), () => (Math.random() > 0.8 ? 1 : 0)));
+    }
+
+    setGrid(rows);
+    }}>
+      20% seed
+    </button>
+    <button onClick={() => {
+    const rows = [];
+    for (let i = 0; i < numRows; i++) {
       rows.push(Array.from(Array(numCols), () => (Math.random() > 0.6 ? 1 : 0)));
     }
 
     setGrid(rows);
     }}>
-      random
+      40% seed
+    </button>
+    <button onClick={() => {
+    const rows = [];
+    for (let i = 0; i < numRows; i++) {
+      rows.push(Array.from(Array(numCols), () => (Math.random() > 0.3 ? 1 : 0)));
+    }
+
+    setGrid(rows);
+    }}>
+      70% seed
+    </button>
+    <button onClick={( ) => {
+      numRows = 25;
+      numCols = 25;
+      setGrid(generateEmptyGrid());
+    }}>
+      25x25
+    </button>
+    <button onClick={( ) => {
+      numRows = 50;
+      numCols = 50;
+      setGrid(generateEmptyGrid());
+    }}>
+      50x50
+    </button>
+    <button onClick={( ) => {
+      numRows = 29;
+      numCols = 64;
+      setGrid(generateEmptyGrid());
+    }}>
+      widescreen
+    </button>
+    <button onClick={( ) => {
+      cellW = 50;
+      cellH = 50;
+      numPix = cellW
+      setGrid(generateEmptyGrid());
+    }}>
+      big cells
+    </button>
+    <button onClick={( ) => {
+      cellW = 25;
+      cellH = 25;
+      numPix = cellW
+      setGrid(generateEmptyGrid());
+    }}>
+      normal cells
+    </button>
+    <button onClick={( ) => {
+      cellW = 10;
+      cellH = 10;
+      numPix = cellW
+      setGrid(generateEmptyGrid());
+    }}>
+      small cells
+    </button>
+    <button onClick={( ) => {
+      if (numPix === 25)
+       numPix = 30;
+       else numPix = 25;
+      setGrid(generateEmptyGrid());
+    }}>
+      spaces
+    </button>
+    <button onClick={( ) => {
+      if (bgColor === 'gray')
+      bgColor = 'white';
+       else bgColor = 'gray';
+       if (borderColor === 'white')
+       borderColor = 'black';
+        else borderColor = 'white';
+      if (cellColor === 'black')
+      cellColor = 'gray';
+         else cellColor = 'black';
+      setGrid(generateEmptyGrid());
+    }}>
+      whitemode
     </button>
     <button onClick={() => {
     setGrid(generateEmptyGrid());
     }}>
-      clear
+      clear cells
     </button>
     <div 
     style ={{
       display: 'grid',
-      gridTemplateColumns: `repeat(${numCols}, 25px)`
+      gridTemplateColumns: `repeat(${numCols}, ${numPix}px)`
     }}
     > 
       {grid.map((rows, i) => 
@@ -125,10 +218,10 @@ const runSimulation = useCallback (() => {
               // console.log('test')
             }}
               style={{
-                width: 25, 
-                height: 25, 
-                backgroundColor: grid[i][j] ? 'black' : 'gray', // set gray to undefined for default
-                border: 'solid 1px white'
+                width: cellW, 
+                height: cellH, 
+                backgroundColor: grid[i][j] ? `${cellColor}` : `${bgColor}`, // set gray to undefined for default
+                border: `solid 1px ${borderColor}`
             }} 
           />
         ))
