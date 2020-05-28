@@ -81,6 +81,7 @@ const runSimulation = useCallback (() => {
 
   // then call ourselves again in 2nd parameter time
   setTimeout(runSimulation, 200)
+  console.count('generation')
 }, [])
 
 
@@ -133,6 +134,7 @@ const runSimulation = useCallback (() => {
     }}>
       25x25
     </button>
+
     <button onClick={( ) => {
       numRows = 50;
       numCols = 50;
@@ -140,6 +142,7 @@ const runSimulation = useCallback (() => {
     }}>
       50x50
     </button>
+
     <button onClick={( ) => {
       numRows = 29;
       numCols = 64;
@@ -147,6 +150,7 @@ const runSimulation = useCallback (() => {
     }}>
       widescreen
     </button>
+
     <button onClick={( ) => {
       cellW = 50;
       cellH = 50;
@@ -155,6 +159,7 @@ const runSimulation = useCallback (() => {
     }}>
       big cells
     </button>
+
     <button onClick={( ) => {
       cellW = 25;
       cellH = 25;
@@ -163,6 +168,7 @@ const runSimulation = useCallback (() => {
     }}>
       normal cells
     </button>
+
     <button onClick={( ) => {
       cellW = 10;
       cellH = 10;
@@ -171,6 +177,7 @@ const runSimulation = useCallback (() => {
     }}>
       small cells
     </button>
+
     <button onClick={( ) => {
       if (numPix === 25)
        numPix = 30;
@@ -179,6 +186,7 @@ const runSimulation = useCallback (() => {
     }}>
       spaces
     </button>
+
     <button onClick={( ) => {
       if (bgColor === 'gray')
       bgColor = 'white';
@@ -193,6 +201,7 @@ const runSimulation = useCallback (() => {
     }}>
       whitemode
     </button>
+
     <button onClick={() => {
     setGrid(generateEmptyGrid());
     }}>
@@ -227,6 +236,13 @@ const runSimulation = useCallback (() => {
         ))
       }}
     </div>
+    <h1>generation:{1}</h1>
+    <h2> About Conway's Game of Life</h2>
+    <p>The Game of Life, is a cellular automaton devised by the British mathematician John Horton Conway in 1970. It is a zero-player game, meaning that its evolution is determined by its initial state, requiring no further input. One interacts with the Game of Life by creating an initial configuration and observing how it evolves. It is Turing complete and can simulate a universal constructor or any other Turing machine.</p>
+    <p>A cell is born if</p>
+    <ol>There are 3 live neighbours next to it</ol>
+    <p>A cell dies if</p>
+    <ol>It has fewer than 2 live neighbours to underpopulation, or more than 3 live neighbors to overpopulation</ol>
     </>
   );
 }
