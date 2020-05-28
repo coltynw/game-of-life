@@ -10,6 +10,7 @@ let bgColor = 'gray';
 let borderColor = 'white';
 let cellW = 25;
 let cellH = 25;
+let count = 0;
 
 const operations = [
   [0, 1],
@@ -81,7 +82,7 @@ const runSimulation = useCallback (() => {
 
   // then call ourselves again in 2nd parameter time
   setTimeout(runSimulation, 200)
-  console.count('generation')
+  count++
 }, [])
 
 
@@ -234,9 +235,9 @@ const runSimulation = useCallback (() => {
             }} 
           />
         ))
-      }}
+      }
     </div>
-    <h1>generation:{1}</h1>
+    <h1>generation:{count}</h1>
     <h2> About Conway's Game of Life</h2>
     <p>The Game of Life, is a cellular automaton devised by the British mathematician John Horton Conway in 1970. It is a zero-player game, meaning that its evolution is determined by its initial state, requiring no further input. One interacts with the Game of Life by creating an initial configuration and observing how it evolves. It is Turing complete and can simulate a universal constructor or any other Turing machine.</p>
     <p>A cell is born if</p>
