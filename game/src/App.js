@@ -5,9 +5,9 @@ import './App.css';
 let numRows = 25;
 let numCols = 25;
 let numPix = 25;
-let cellColor = 'black';
-let bgColor = 'gray';
-let borderColor = 'white';
+let cellColor = 'gray';
+let bgColor = 'white';
+let borderColor = 'black';
 let cellW = 25;
 let cellH = 25;
 let count = 0;
@@ -34,7 +34,7 @@ function App() {
     return rows;
   });
 
-  console.log(grid);
+  // console.log(grid);
 
   
 const [running, setRunning] = useState(false);
@@ -47,7 +47,7 @@ const generateEmptyGrid = () => {
     for (let i = 0; i < numRows; i++) {
       rows.push(Array.from(Array(numCols), () => 0));
     }
-
+    count = 0;
     return rows;
 }
 
@@ -93,6 +93,7 @@ const runSimulation = useCallback (() => {
       setRunning(!running);
       if (!running) {
       runningRef.current = true;
+      count = 0;
       runSimulation();
     } 
     }}
@@ -102,6 +103,7 @@ const runSimulation = useCallback (() => {
     const rows = [];
     for (let i = 0; i < numRows; i++) {
       rows.push(Array.from(Array(numCols), () => (Math.random() > 0.8 ? 1 : 0)));
+      count = 0;
     }
 
     setGrid(rows);
@@ -112,6 +114,7 @@ const runSimulation = useCallback (() => {
     const rows = [];
     for (let i = 0; i < numRows; i++) {
       rows.push(Array.from(Array(numCols), () => (Math.random() > 0.6 ? 1 : 0)));
+      count = 0;
     }
 
     setGrid(rows);
@@ -131,9 +134,16 @@ const runSimulation = useCallback (() => {
     <button onClick={( ) => {
       numRows = 25;
       numCols = 25;
+      numPix = 25;
+      cellColor = 'gray';
+      bgColor = 'white';
+      borderColor = 'black';
+      cellW = 25;
+      cellH = 25;
+      count = 0;
       setGrid(generateEmptyGrid());
     }}>
-      25x25
+      RESET
     </button>
 
     <button onClick={( ) => {
@@ -153,54 +163,65 @@ const runSimulation = useCallback (() => {
     </button>
 
     <button onClick={( ) => {
-      cellW = 50;
-      cellH = 50;
+      numRows++;
+      setGrid(generateEmptyGrid());
+    }}>
+      +row
+    </button>
+
+    <button onClick={( ) => {
+      numCols++;
+      setGrid(generateEmptyGrid());
+    }}>
+      +collum
+    </button>
+
+    <button onClick={( ) => {
+      numRows++;
+      numCols++;
+      setGrid(generateEmptyGrid());
+    }}>
+      +both
+    </button>
+
+    <button onClick={( ) => {
+      cellW++;
+      cellH++;
       numPix = cellW
       setGrid(generateEmptyGrid());
     }}>
-      big cells
+      bigger cells
     </button>
 
     <button onClick={( ) => {
-      cellW = 25;
-      cellH = 25;
+      cellW--;
+      cellH--;
       numPix = cellW
       setGrid(generateEmptyGrid());
     }}>
-      normal cells
+      smaller cells
     </button>
 
     <button onClick={( ) => {
-      cellW = 10;
-      cellH = 10;
-      numPix = cellW
+       numPix++;
       setGrid(generateEmptyGrid());
     }}>
-      small cells
+      add width space?
     </button>
 
     <button onClick={( ) => {
-      if (numPix === 25)
-       numPix = 30;
-       else numPix = 25;
+      if (bgColor === 'white')
+      bgColor = 'gray';
+       else bgColor = 'white';
+       if (borderColor === 'black')
+       borderColor = 'white';
+        else borderColor = 'black';
+      if (cellColor === 'gray')
+      cellColor = 'black';
+         else cellColor = 'gray';
       setGrid(generateEmptyGrid());
     }}>
-      spaces
-    </button>
-
-    <button onClick={( ) => {
-      if (bgColor === 'gray')
-      bgColor = 'white';
-       else bgColor = 'gray';
-       if (borderColor === 'white')
-       borderColor = 'black';
-        else borderColor = 'white';
-      if (cellColor === 'black')
-      cellColor = 'gray';
-         else cellColor = 'black';
-      setGrid(generateEmptyGrid());
-    }}>
-      whitemode
+      { bgColor === 'white' ? 'darkmode' : 'lightmode'}
     </button>
 
     <button onClick={() => {
