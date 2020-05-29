@@ -13,7 +13,7 @@ let cellH = 25;
 let count = 0;
 let time = 200;
 
-const operations = [
+const operations = [ // you need this later for checking the neighbors
   [0, 1],
   [0, -1],
   [1, -1],
@@ -26,8 +26,8 @@ const operations = [
 
 
 function App() {
-  const [grid, setGrid] = useState(() => {
-    const rows = [];
+  const [grid, setGrid] = useState(() => { // inside state
+    const rows = []; // // making the grid for the first time
     for (let i = 0; i < numRows; i++) {
       rows.push(Array.from(Array(numCols), () => 0));
     }
@@ -40,15 +40,15 @@ function App() {
   
 const [running, setRunning] = useState(false);
 
-const runningRef = useRef();
+const runningRef = useRef(); // you need useRef to accurately determine the value of is running
 runningRef.current = running // the current value of Ref is whatever the value of running is
 
 const generateEmptyGrid = () => {
   const rows = [];
-    for (let i = 0; i < numRows; i++) {
-      rows.push(Array.from(Array(numCols), () => 0));
+    for (let i = 0; i < numRows; i++) { // iterate through all the cells with a for loop 
+      rows.push(Array.from(Array(numCols), () => 0)); // then set them all to dead
     }
-    count = 0;
+    count = 0; // also reset geration counter 
     return rows;
 }
 
@@ -106,32 +106,32 @@ const runSimulation = useCallback (() => {
       rows.push(Array.from(Array(numCols), () => (Math.random() > 0.8 ? 1 : 0)));
       count = 0;
     }
-
     setGrid(rows);
     }}>
       20% seed
     </button>
+
     <button onClick={() => {
     const rows = [];
     for (let i = 0; i < numRows; i++) {
       rows.push(Array.from(Array(numCols), () => (Math.random() > 0.6 ? 1 : 0)));
       count = 0;
     }
-
     setGrid(rows);
     }}>
       40% seed
     </button>
+
     <button onClick={() => {
     const rows = [];
     for (let i = 0; i < numRows; i++) {
       rows.push(Array.from(Array(numCols), () => (Math.random() > 0.3 ? 1 : 0)));
     }
-
     setGrid(rows);
     }}>
       70% seed
     </button>
+
     <button onClick={( ) => {
       numRows = 25;
       numCols = 25;
@@ -247,7 +247,7 @@ const runSimulation = useCallback (() => {
       clear cells
     </button>
     <div 
-    style ={{
+    style ={{ 
       display: 'grid',
       gridTemplateColumns: `repeat(${numCols}, ${numPix}px)`
     }}
@@ -255,7 +255,7 @@ const runSimulation = useCallback (() => {
       {grid.map((rows, i) => 
         rows.map((col, j) => 
           <div 
-            key={`${i}-${j}`}
+            key={`${i}-${j}`} // we need the key for an ID on the cells to know if they are alive or dead
             onClick={() => { 
               // in order to change the state without making it mutable, I'm using immer 'produce function
               const newGrid = produce(grid, gridCopy => { 
@@ -268,7 +268,7 @@ const runSimulation = useCallback (() => {
               style={{
                 width: cellW, 
                 height: cellH, 
-                backgroundColor: grid[i][j] ? `${cellColor}` : `${bgColor}`, // set gray to undefined for default
+                backgroundColor: grid[i][j] ? `${cellColor}` : `${bgColor}`, 
                 border: `solid 1px ${borderColor}`
             }} 
           />
@@ -276,6 +276,7 @@ const runSimulation = useCallback (() => {
       }
     </div>
     <h1>generation:{count}</h1>
+    <p> Collums: {numCols}, Rows: {numRows}, Cells are {numPix}px, </p>
     <h2> About Conway's Game of Life</h2>
     <p>The Game of Life, is a cellular automaton devised by the British mathematician John Horton Conway in 1970. It is a zero-player game, meaning that its evolution is determined by its initial state, requiring no further input. One interacts with the Game of Life by creating an initial configuration and observing how it evolves. It is Turing complete and can simulate a universal constructor or any other Turing machine.</p>
     <p>A cell is born if</p>
